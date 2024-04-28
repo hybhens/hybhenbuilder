@@ -2,7 +2,7 @@ import javascriptGenerator from '../javascriptGenerator';
 import registerBlock from '../register';
 
 const categoryPrefix = 'functions_';
-const categoryColor = '#5531D6';
+const categoryColor = '#FF6680';
 
 function register() {
     // function

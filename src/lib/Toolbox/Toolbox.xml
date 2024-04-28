@@ -84,7 +84,7 @@
         <block type="variable_setls" />
         <block type="variable_getls" />
     </category>
-    <category name="JSON" colour="#FF661A">
+    <category name="JSON" colour="#5755D4">
         <block type="json_validate" />
         <block type="json_tojson" />
         <block type="json_tostring" />
@@ -104,14 +104,16 @@
         <block type="json_objectvalues" />
     </category>
     <sep></sep>
-    <category name="Blocks" colour="#FF6680">
+    <category name="Blocks" colour="#7B7996">
         <block type="blocks_create" />
+        <block type="blocks_createobject" />
+        <block type="blocks_startbranch" />
         <block type="blocks_input" />
         <sep gap="48"></sep>
         <block type="blocks_get" />
         <block type="blocks_return" />
     </category>
-    <category name="Functions" colour="#5531D6">
+    <category name="Functions" colour="#FF6680">
         <block type="functions_create">
             <statement name="FUNC">
                 <block type="functions_return" />

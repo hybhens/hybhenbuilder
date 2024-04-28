@@ -194,9 +194,9 @@
     function downloadProject() {
         // generate file name
         let filteredProjectName = (projectName || projectID).replace(/[^a-z0-9\-]+/gim, "_");
-        let fileName = filteredProjectName + ".tb";
+        let fileName = filteredProjectName + ".eb";
         if (!filteredProjectName) {
-            fileName = "MyProject.tb";
+            fileName = "MyProject.eb";
         }
 
         // data
@@ -227,11 +227,11 @@
         });
     }
     function loadProject() {
-        fileDialog({ accept: ".tb" }).then((files) => {
+        fileDialog({ accept: ".eb" }).then((files) => {
             if (!files) return;
             const file = files[0];
 
-            const projectNameIdx = file.name.lastIndexOf(".tb");
+            const projectNameIdx = file.name.lastIndexOf(".eb");
 
             JSZip.loadAsync(file.arrayBuffer()).then(async (zip) => {
                 console.log("loaded zip file...");

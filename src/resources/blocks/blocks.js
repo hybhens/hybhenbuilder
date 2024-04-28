@@ -8,7 +8,7 @@ const categoryColor = '#7B7996';
 function register() {
     // create dem blocks!!!
     registerBlock(`${categoryPrefix}create`, {
-        message0: 'create block %1 id: %2 %3 text: %4 %5 type: %6 %7 inputs: %8 %9 function: %10 %11',
+        message0: 'create block %1 id: %2 %3 text: %4 %5 type: %6 %7 end cap?: %8 %9 disable monitor?: %10 %11 branch count: %12 %13 inputs: %14 %15 function: %16 %17',
         args0: [
             {
                 "type": "input_dummy"
@@ -38,7 +38,39 @@ function register() {
                     [ "block", "COMMAND" ],
                     [ "reporter", "REPORTER" ],
                     [ "boolean", "BOOLEAN" ],
+                    [ "conditional", "CONDITIONAL" ],
+                    [ "loop", "LOOP" ],
                 ]
+            },
+            {
+                "type": "input_dummy"
+            },
+            {
+                "type": "field_dropdown",
+                "name": "TERMINAL",
+                "options": [
+                    [ "false", 'false' ],
+                    [ "true", 'true' ],
+                ]
+            },
+            {
+                "type": "input_dummy"
+            },
+            {
+                "type": "field_dropdown",
+                "name": "DISABLE_MONITOR",
+                "options": [
+                    [ "false", 'false' ],
+                    [ "true", 'true' ],
+                ]
+            },
+            {
+                "type": "input_dummy"
+            },
+            {
+                "type": "field_number",
+                "name": "BRANCH_COUNT",
+                "value": 1,
             },
             {
                 "type": "input_dummy"
@@ -65,18 +97,37 @@ function register() {
     }, (block) => {
         const ID = block.getFieldValue('ID')
         const TEXT = block.getFieldValue('TEXT')
+        const TERMINAL = block.getFieldValue('TERMINAL')
+        const DISABLE_MONITOR = block.getFieldValue('DISABLE_MONITOR')
+        const BRANCH_COUNT = block.getFieldValue('BRANCH_COUNT')
         const TYPE = block.getFieldValue('TYPE')
         const INPUTS = javascriptGenerator.statementToCode(block, 'INPUTS');
         const FUNC = javascriptGenerator.statementToCode(block, 'FUNC');
         
-        const code = `blocks.push({
+        let code;
+
+        code = `blocks.push({
             opcode: \`${ID}\`,
             blockType: Scratch.BlockType.${TYPE},
             text: \`${TEXT}\`,
-            arguments: { ${INPUTS} },
-            disableMonitor: true
-        });
-        Extension.prototype[\`${ID}\`] = async (args, util) => { ${FUNC} };`;
+            arguments: { ${INPUTS} },`
+            if (TYPE === 'COMMAND' || TYPE === 'CONDITIONAL' || TYPE === 'LOOP') { 
+                if (TERMINAL === 'true') {
+                code += ('\n' + `isTerminal: true,`)
+                }
+            }
+            if (TYPE === 'CONDITIONAL' || TYPE === 'LOOP') { 
+                code += ('\n' + `branchCount: ${BRANCH_COUNT},`)
+            }
+            if (TYPE === 'REPORTER' || TYPE === 'BOOLEAN') { 
+                if (DISABLE_MONITOR === 'true') {
+                code += ('\n' + `disableMonitor: true,`)
+                }
+            }
+            code = code.slice(0, -1);
+
+        code += ('\n' + `});
+            Extension.prototype[\`${ID}\`] = async (args, util) => { ${FUNC} };`);
         return `${code}\n`;
     })
 
@@ -132,14 +183,60 @@ function register() {
         const TYPE = block.getFieldValue('TYPE')
         const FUNC = javascriptGenerator.statementToCode(block, 'FUNC');
         
-        const code = `blocks.push({
+        let code;
+        if (TYPE === 'BUTTON') {
+        code = `blocks.push({
             opcode: \`${ID}\`,
             blockType: Scratch.BlockType.${TYPE},
             text: \`${TEXT}\`,
-            arguments: { ${INPUTS} },
             disableMonitor: true
         });
         Extension.prototype[\`${ID}\`] = async (args, util) => { ${FUNC} };`;
+        } else {
+            code = `blocks.push({
+                opcode: \`${ID}\`,
+                blockType: Scratch.BlockType.${TYPE},
+                text: \`${TEXT}\`,
+                disableMonitor: true
+            });`;  
+        }
+        return `${code}\n`;
+    })
+
+    registerBlock(`${categoryPrefix}startbranch`, {
+        message0: 'run branch %1 %2 loop? %3',
+        args0: [
+            {
+                "type": "field_number",
+                "name": "BRANCH",
+                "value": 1,
+            },
+            {
+                "type": "input_dummy"
+            },
+            {
+                "type": "field_dropdown",
+                "name": "LOOP",
+                "options": [
+                    [ "false", 'false' ],
+                    [ "true", 'true' ],
+                ]
+            }
+        ],
+        previousStatement: null,
+        nextStatement: null,
+        inputsInline: true,
+        colour: categoryColor
+    }, (block) => {
+        const BRANCH = block.getFieldValue('BRANCH')
+        const LOOP = block.getFieldValue('LOOP')
+        let code;
+
+        if (LOOP === 'true') {
+            code = `util.startBranch(${BRANCH}, true)`; 
+        } else {
+            code = `util.startBranch(${BRANCH})`;  
+        }
         return `${code}\n`;
     })
 

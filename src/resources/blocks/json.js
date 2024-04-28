@@ -2,7 +2,7 @@ import javascriptGenerator from '../javascriptGenerator';
 import registerBlock from '../register';
 
 const categoryPrefix = 'json_';
-const categoryColor = '#FF661A';
+const categoryColor = '#5755D4';
 
 function register() {
     // check if a string is json
