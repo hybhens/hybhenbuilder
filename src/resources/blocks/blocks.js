@@ -108,9 +108,13 @@ function register() {
 
         code = `blocks.push({
             opcode: \`${ID}\`,
-            blockType: Scratch.BlockType.${TYPE},
-            text: \`${TEXT}\`,
-            arguments: { ${INPUTS} },`
+            blockType: Scratch.BlockType.${TYPE},`
+            if ((TEXT.startsWith('["') && TEXT.endsWith('"]')) || (TEXT.startsWith("['") && TEXT.endsWith("']")) || (TEXT.startsWith("[`") && TEXT.endsWith("`]"))) {
+                code += ('\n' + `text: ${TEXT},`)
+            } else {
+                code += ('\n' + `text: \`${TEXT}\`,`)
+            }
+            code += ('\n' + `arguments: { ${INPUTS} },`)
             if (TYPE === 'COMMAND' || TYPE === 'CONDITIONAL' || TYPE === 'LOOP') { 
                 if (TERMINAL === 'true') {
                 code += ('\n' + `isTerminal: true,`)
