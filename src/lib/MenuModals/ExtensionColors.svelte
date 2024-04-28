@@ -153,8 +153,8 @@
         cursor: pointer;
     }
     .button-accept {
-        border: 1px solid #ff4b4b;
-        background: #ff4b4b;
+        border: 1px solid #625E97;
+        background: #625E97;
         color: white;
         font-weight: bold;
         padding: 0.75rem 1rem;
@@ -211,7 +211,7 @@
         top: 0px;
         width: 100%;
         height: 100%;
-        background: #ff4b4bb0;
+        background: #625E97b0;
         z-index: 999999;
         display: flex;
         flex-direction: column;
@@ -239,7 +239,7 @@
     .modal-title {
         width: 100%;
         height: 10%;
-        background: #ff4b4b;
+        background: #625E97;
         color: white;
         display: flex;
         flex-direction: column;
@@ -247,7 +247,7 @@
         justify-content: center;
     }
     :global(body.dark) .modal-title {
-        background-color: #333;
+        background-color: #2A293F;
     }
     .modal-content {
         width: 100%;

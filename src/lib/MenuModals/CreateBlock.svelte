@@ -374,7 +374,7 @@
         justify-content: center;
     }
     :global(body.dark) .modal-title {
-        background-color: #333;
+        background-color: #2A293F;
     }
     .modal-content {
         width: 100%;

@@ -10,5 +10,5 @@ This project is not finished and is still being worked on. Expect bugs and probl
 
 1. Clone the repo
 2. Run `npm i --force` in a terminal inside the folder where the repo is
-3. Run `npm run dev` in a terminal inside the folder where the repo is
-4. Visit http://localhost:5173/
+3. Run `npm run bnp` in a terminal inside the folder where the repo is
+4. Visit http://localhost:4173/

@@ -48,7 +48,7 @@
         flex-direction: row;
         align-items: center;
 
-        background: #ff4b4b;
+        background: #625E97;
     }
     .logo-margin {
         margin: 0 6px;
@@ -74,6 +74,6 @@
     }
 
     :global(body.dark) .nav {
-        background: #333;
+        background: #2A293F;
     }
 </style>

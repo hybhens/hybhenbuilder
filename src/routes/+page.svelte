@@ -153,7 +153,6 @@
         color1: "#0088ff",
         color2: "#0063ba",
         color3: "",
-        tbShow: true
     };
 
     function updateGeneratedCode() {
@@ -352,10 +351,6 @@
     const ModalState = {
         extensionColors: false,
     };
-
-    function discordInvite() {
-        window.open("https://discord.gg/eVQdK8csJc")
-    }
 </script>
 
 <CreateBlockModal
@@ -368,13 +363,11 @@
         color1={extensionMetadata.color1}
         color2={extensionMetadata.color2}
         color3={extensionMetadata.color3}
-        tbShow={extensionMetadata.tbShow}
         on:completed={(colors) => {
             ModalState.extensionColors = false;
             extensionMetadata.color1 = colors.detail.color1;
             extensionMetadata.color2 = colors.detail.color2;
             extensionMetadata.color3 = colors.detail.color3;
-            extensionMetadata.tbShow = colors.detail.tbShow;
             updateGeneratedCode();
         }}
         on:cancel={() => {
@@ -384,8 +377,6 @@
     />
 {/if}
 <NavigationBar>
-    <NavigationButton on:click={discordInvite}>Discord</NavigationButton>
-    <NavigationDivider />
     <NavigationButton on:click={downloadProject}>Save</NavigationButton>
     <NavigationButton on:click={loadProject}>Load</NavigationButton>
     <NavigationDivider />
