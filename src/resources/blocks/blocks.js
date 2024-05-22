@@ -40,6 +40,9 @@ function register() {
                     [ "boolean", "BOOLEAN" ],
                     [ "conditional", "CONDITIONAL" ],
                     [ "loop", "LOOP" ],
+                    [ "object (only available in ElectraMod, Unsandboxed and NitroBolt)", "OBJECT" ],
+                    [ "array (only available in ElectraMod, Unsandboxed and NitroBolt)", "ARRAY" ],
+                    [ "inline (only available in ElectraMod and Unsandboxed)", "INLINE" ],
                 ]
             },
             {
@@ -267,6 +270,8 @@ function register() {
                     [ "string", "STRING" ],
                     [ "number", "NUMBER" ],
                     [ "boolean", "BOOLEAN" ],
+                    [ "object (only available in ElectraMod, Unsandboxed and NitroBolt)", "OBJECT" ],
+                    [ "array (only available in ElectraMod, Unsandboxed and NitroBolt)", "ARRAY" ],
                     [ "color", "COLOR" ],
                     [ "costume", "COSTUME" ],
                     [ "sound", "SOUND" ],
@@ -336,5 +341,26 @@ function register() {
         const code = `return ${VALUE || ''}`;
         return `${code}\n`;
     })
+
+        // return
+        registerBlock(`${categoryPrefix}callhat`, {
+            message0: 'call hat %1',
+            args0: [
+                {
+                    "type": "field_input",
+                    "name": "NAME",
+                    "text": "HATID",
+                    "spellcheck": false
+                }
+            ],
+            previousStatement: null,
+            nextStatement: null,
+            inputsInline: true,
+            colour: categoryColor,
+        }, (block) => {
+            const NAME = block.getFieldValue('NAME')
+            const code = `Scratch.vm.runtime.startHats(\`\${Extension.prototype.getInfo().id}_${NAME}\`)`;
+            return `${code}\n`;
+        })
 }
 export default register;

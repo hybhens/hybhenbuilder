@@ -1,4 +1,14 @@
 <xml>
+    <category name="Sprites" colour="#4C97FF">
+        <block type="sprites_getsprite" />
+        <sep gap="48"></sep>
+        <block type="sprites_stage" />
+        <block type="sprites_isstage" />
+        <sep gap="48"></sep>
+        <block type="sprites_getx" />
+        <block type="sprites_gety" />
+        <block type="sprites_getdir" />
+    </category>
     <category name="Events" colour="#FFBF00">
         <block type="events_interval" />
         <block type="events_timeout" />
@@ -108,27 +118,27 @@
         <block type="blocks_create" />
         <block type="blocks_createobject" />
         <block type="blocks_startbranch" />
+        <block type="blocks_callhat" />
         <block type="blocks_input" />
         <sep gap="48"></sep>
         <block type="blocks_get" />
         <block type="blocks_return" />
     </category>
+    <category name="Menus" colour="#CB48E8">
+        <block type="menus_create" />
+        <block type="menus_created" />
+    </category>
     <category name="Functions" colour="#FF6680">
-        <block type="functions_create">
-            <statement name="FUNC">
+        <block type="functions_define">
+            <statement name="BLOCKS">
                 <block type="functions_return" />
             </statement>
         </block>
-        <block type="functions_inline">
-            <statement name="FUNC">
-                <block type="functions_return" />
-            </statement>
-        </block>
-        <sep gap="48"></sep>
         <block type="functions_return" />
+        <block type="functions_arg" />
         <sep gap="48"></sep>
-        <block type="functions_call" />
-        <block type="functions_callreporter" />
+        <block type="functions_execute_a" />
+        <block type="functions_execute_b" />
     </category>
     <category name="Technical" colour="#666666">
         <block type="debug_log" />

@@ -50,6 +50,7 @@
     import registerGeneric from "../resources/blocks/generic.js";
     registerGeneric();
 
+    import registerSprites from "../resources/blocks/sprites.js";
     import registerCore from "../resources/blocks/core.js";
     import registerEvents from "../resources/blocks/events.js";
     import registerControl from "../resources/blocks/control.js";
@@ -61,9 +62,11 @@
     import registerVariables from "../resources/blocks/variables.js";
     import registerJSON from "../resources/blocks/json.js";
     import registerBlocks from "../resources/blocks/blocks.js";
+    import registerMenus from "../resources/blocks/menus.js";
     import registerFunctions from "../resources/blocks/functions.js";
     import registerDebug from "../resources/blocks/debug.js";
     
+    registerSprites();
     registerCore();
     registerControl();
     registerEvents();
@@ -75,6 +78,7 @@
     registerVariables();
     registerJSON();
     registerBlocks();
+    registerMenus();
     registerFunctions();
     registerDebug();
 

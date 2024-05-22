@@ -5,53 +5,24 @@ const categoryPrefix = 'functions_';
 const categoryColor = '#FF6680';
 
 function register() {
-    // function
-    registerBlock(`${categoryPrefix}create`, {
-        message0: 'function %1 %2 %3',
-        args0: [
-            {
-                "type": "field_input",
-                "name": "ID",
-                "text": "id",
-                "spellcheck": false
-            },
-            {
-                "type": "input_dummy"
-            },
-            {
-                "type": "input_statement",
-                "name": "FUNC"
-            }
-        ],
-        nextStatement: null,
-        inputsInline: true,
-        colour: categoryColor,
-    }, (block) => {
-        const ID = block.getFieldValue('ID')
-        const FUNC = javascriptGenerator.statementToCode(block, 'FUNC');
-        
-        const code = `async function ${ID}() { ${FUNC} }`;
-        return `${code}\n`;
-    })
-
-    // inline function
-    registerBlock(`${categoryPrefix}inline`, {
-        message0: 'inline function %1 %2',
+    // define func
+    registerBlock(`${categoryPrefix}define`, {
+        message0: 'define %1 %2',
         args0: [
             {
                 "type": "input_dummy"
             },
             {
                 "type": "input_statement",
-                "name": "FUNC"
+                "name": "BLOCKS"
             }
         ],
-        output: null,
+        output: "Function",
         inputsInline: true,
-        colour: categoryColor,
+        colour: categoryColor
     }, (block) => {
-        const FUNC = javascriptGenerator.statementToCode(block, 'FUNC');
-        return [`await (async () => { ${FUNC} })()`, javascriptGenerator.ORDER_ATOMIC];
+        const BLOCKS = javascriptGenerator.statementToCode(block, 'BLOCKS');
+        return [`(async (functionArg) => { ${BLOCKS} })`, javascriptGenerator.ORDER_NONE];
     })
 
     // return
@@ -72,44 +43,61 @@ function register() {
         return `${code}\n`;
     })
 
-    // call
-    registerBlock(`${categoryPrefix}call`, {
-        message0: 'call %1',
+    // execute
+    registerBlock(`${categoryPrefix}execute_a`, {
+        message0: 'execute %1 with %2',
         args0: [
             {
-                "type": "field_input",
-                "name": "ID",
-                "text": "id",
-                "spellcheck": false
+                "type": "input_value",
+                "name": "FUNC",
+                "check": "Function"
             },
+            {
+                "type": "input_value",
+                "name": "ARG"
+            }
         ],
         previousStatement: null,
         nextStatement: null,
         inputsInline: true,
-        colour: categoryColor,
+        colour: categoryColor
     }, (block) => {
-        const ID = block.getFieldValue('ID')
-        const code = `${ID}()`;
+        const FUNC = javascriptGenerator.valueToCode(block, 'FUNC', javascriptGenerator.ORDER_ATOMIC);
+        const ARG = javascriptGenerator.valueToCode(block, 'ARG', javascriptGenerator.ORDER_ATOMIC);
+        const code = `${FUNC || "()=>{}"}(${ARG});`;
         return `${code}\n`;
     })
-
-    // call
-    registerBlock(`${categoryPrefix}callreporter`, {
-        message0: 'call %1',
+    registerBlock(`${categoryPrefix}execute_b`, {
+        message0: 'execute %1 with %2',
         args0: [
             {
-                "type": "field_input",
-                "name": "ID",
-                "text": "id",
-                "spellcheck": false
+                "type": "input_value",
+                "name": "FUNC",
+                "check": "Function"
             },
+            {
+                "type": "input_value",
+                "name": "ARG"
+            }
         ],
         output: null,
         inputsInline: true,
-        colour: categoryColor,
+        colour: categoryColor
     }, (block) => {
-        const ID = block.getFieldValue('ID')
-        return [`${ID}()\n`, javascriptGenerator.ORDER_ATOMIC];
+        const FUNC = javascriptGenerator.valueToCode(block, 'FUNC', javascriptGenerator.ORDER_ATOMIC);
+        const ARG = javascriptGenerator.valueToCode(block, 'ARG', javascriptGenerator.ORDER_ATOMIC);
+        return [`(${FUNC || "()=>{}"}(${ARG}))`, javascriptGenerator.ORDER_NONE];
+    })
+
+    //arg
+    registerBlock(`${categoryPrefix}arg`, {
+        message0: 'function argument',
+        args0: [],
+        output: null,
+        inputsInline: true,
+        colour: categoryColor
+    }, (block) => {
+        return [`functionArg`, javascriptGenerator.ORDER_NONE];
     })
 }
 export default register;

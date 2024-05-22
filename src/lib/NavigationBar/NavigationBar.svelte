@@ -25,8 +25,11 @@
         class="logo-margin"
         style="height: 30px;"
     />
-    <button class="theme-switcher" on:click={switchTheme}>
-        <img src="/images/theme_switcher.svg" alt="Theme Switcher" />
+    <button class="theme-switcher moon" on:click={switchTheme}>
+        <img src="/images/moon.svg" alt="Theme Switcher" />
+    </button>
+    <button class="theme-switcher sun" on:click={switchTheme}>
+        <img src="/images/sun.svg" alt="Theme Switcher" />
     </button>
     <Divider />
     <slot />
@@ -72,8 +75,22 @@
     :global(body.dark) .theme-switcher:hover {
         background: rgba(255, 255, 255, 0.2);
     }
+    
 
     :global(body.dark) .nav {
         background: #2A293F;
+    }
+
+    .moon {
+        display: block;
+    }
+    .sun {
+        display: none;
+    }
+    :global(body.dark) .moon {
+        display: none;
+    }
+    :global(body.dark) .sun {
+        display: block;
     }
 </style>
