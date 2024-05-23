@@ -7,6 +7,7 @@ class CustomConstantProvider extends Blockly.zelos.ConstantProvider {
         this.ROUNDEL = this.makeRoundel()
         this.ROUNDEDINVERTED = this.makeRoundedInverted()
         this.RHOMBUS = this.makeRhombus()
+        this.HOXAGEN = this.makeHoxagen()
     }
 
     makeSquared() {
@@ -233,6 +234,35 @@ class CustomConstantProvider extends Blockly.zelos.ConstantProvider {
         };
     }
 
+    makeHoxagen() {
+    const maxWidth = this.MAX_DYNAMIC_CONNECTION_SHAPE_WIDTH;
+    const maxHeight = maxWidth * 2;
+
+    function makeMainPath(blockHeight, up, right) {
+        const remainingHeight = blockHeight > maxHeight ? blockHeight - maxHeight : 0;
+        const height = blockHeight > maxHeight ? maxHeight : blockHeight;
+        const sideLength = height / Math.sqrt(3);
+        
+        const points = [
+            { x: 0, y: -sideLength },
+            { x: sideLength * Math.sqrt(3) / 2, y: -sideLength / 2 },
+            { x: sideLength * Math.sqrt(3) / 2, y: sideLength / 2 },
+            { x: 0, y: sideLength },
+            { x: -sideLength * Math.sqrt(3) / 2, y: sideLength / 2 },
+            { x: -sideLength * Math.sqrt(3) / 2, y: -sideLength / 2 }
+        ];
+
+        return (
+            Blockly.utils.svgPaths.moveBy(points[0].x, points[0].y) +
+            Blockly.utils.svgPaths.lineTo(points[1].x, points[1].y) +
+            Blockly.utils.svgPaths.lineTo(points[2].x, points[2].y) +
+            Blockly.utils.svgPaths.lineTo(points[3].x, points[3].y) +
+            Blockly.utils.svgPaths.lineTo(points[4].x, points[4].y) +
+            Blockly.utils.svgPaths.lineTo(points[5].x, points[5].y) +
+            Blockly.utils.svgPaths.close()
+        );
+    }
+}
     /**
      * @param {Blockly.RenderedConnection} connection
      */
@@ -250,6 +280,8 @@ class CustomConstantProvider extends Blockly.zelos.ConstantProvider {
                 return this.ROUNDEL;
             } else if (checks && checks.indexOf('JSONArray') !== -1) {
                 return this.ROUNDEDINVERTED;
+            } else if (checks && checks.indexOf('Looks') !== -1) {
+                return this.Hoxagen;
             }
         }
         return super.shapeFor(connection)
