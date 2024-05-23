@@ -9,6 +9,18 @@
         <block type="sprites_gety" />
         <block type="sprites_getdir" />
     </category>
+    
+    <category name="Looks" colour="#9966ff">
+    <block type="looks_stage"></block>
+    <sep gap="48"></sep>
+    <block type="looks_say">
+    </block>
+    <sep gap="48"></sep>
+    <block type="looks_setCostume">
+    <block type="looks_changeColorEffect">
+    </block>
+    </category>
+
     <category name="Events" colour="#FFBF00">
         <block type="events_interval" />
         <block type="events_timeout" />
